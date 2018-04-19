@@ -8,4 +8,16 @@ public class Contact {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public static Contact creatContact(String name, String phoneNumber){
+        return new Contact(name,phoneNumber);
+    }
 }
