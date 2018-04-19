@@ -6,4 +6,10 @@ public class MobilePhone {
 
     //todo:function
 
+    public ArrayList<Contact> addContact(String name, String number){
+        ArrayList<Contact> arrayList = this.arrayList
+        arrayList.add(arrayList.set());
+
+        return;
+    }
 }
