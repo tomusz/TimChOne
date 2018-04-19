@@ -3,45 +3,123 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+    private static MobilePhone mobilePhone = new MobilePhone("123 123 123");
 
     public static void main(String[] args) {
 
         //todo: menu form function
         printMenu();
 
+        boolean quit = false;
 
-        int chosen = scanner.nextInt();
+        while(!quit){
+            int chosen = scanner.nextInt();
+            scanner.nextLine();
 
-        switch (chosen){
+            switch (chosen){
 
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            default:
-                System.out.println("You have chosen bad number. Pick 6. to show menu");
-                break;
+                case 1:
+                    addNewContact();
+                    break;
+                case 2:
+                    findContact();
+                    break;
+                case 3:
+                    updateContact();
+                    break;
+                case 4:
+                    removeContact();
+                    break;
+                case 5:
+                    mobilePhone.printContacts();
+                    break;
+                case 6:
+                    printMenu();
+                    break;
+                case 7:
+                    quit = true;
+                    break;
+                default:
+                    System.out.println("You have chosen bad number. Pick 6. to show menu");
+                    break;
+
+
+            }
 
 
         }
 
 
 
+
         //final development and tests maybe
     }
 
-    public static void printMenu(){
+    private static void addNewContact(){
+        System.out.println("Enter new contact name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter phone numer");
+        String phone = scanner.nextLine();
+        Contact newContact = Contact.creatContact(name,phone);
+        if(mobilePhone.addNewContact(newContact)){
+            System.out.println("New contact added: " + name + " phone "+ phone);
+        }else {
+            System.out.println("Can't added: " + name + " phone "+ phone);
+        }
+    }
+
+    private static void findContact(){
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+        if(existingContactRecord == null){
+            System.out.println("Contact not found");
+            return;
+        }
+
+        System.out.println("Name: "+ existingContactRecord.getName()+" phone numer found.");
+    }
+
+    private static void updateContact(){
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+        if(existingContactRecord == null){
+            System.out.println("Contact not found");
+            return;
+        }
+
+        System.out.println("Eneter new contact name");
+        String newName = scanner.nextLine();
+        System.out.println("Eneter new contact phone");
+        String newPhone = scanner.nextLine();
+        Contact newContact = Contact.creatContact(newName,newPhone);
+        if(mobilePhone.updateContact(existingContactRecord,newContact)){
+            System.out.println("Sucessfully updated record");
+        }else{
+            System.out.println("Error updating");
+        }
+    }
+
+    private static void removeContact(){
+        System.out.println("Enter existing contact name: ");
+        String name = scanner.nextLine();
+        Contact existingContactRecord = mobilePhone.queryContact(name);
+        if(existingContactRecord == null){
+            System.out.println("Contact not found");
+            return;
+        }
+        if(mobilePhone.removeContact(existingContactRecord)){
+            System.out.println("Sucessfully deleted");
+        }else{
+
+            System.out.println("Error deleted");
+        }
+    }
+
+    private static void printMenu(){
         System.out.println("..::      Menu       ::..");
         System.out.println("..::   Pick number   ::..");
         System.out.println("1..::   Add contact  ::..");
@@ -53,4 +131,5 @@ public class Main {
         System.out.println("7..::      Quit      ::..");
         System.out.println("..::                 ::..");
     }
+
 }
